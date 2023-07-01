@@ -1,0 +1,57 @@
+.hero {
+  position: relative;
+
+  &__title {
+    display: inline;
+    @extend %font-size-title-lg;
+    line-height: 1.05;
+    font-weight: 600;
+    hyphens: none;
+
+    @include breakpoint-down(420) {
+      hyphens: manual;
+    }
+  }
+
+  &__name {
+    margin-top: 15px;
+    @extend %font-size-title-md;
+  }
+
+  &__button-scheme-color {
+    float: right;
+    position: relative;
+    margin: 7px;
+
+    &:focus-visible {
+      outline: 1px solid black;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &__icon--light {
+    position: relative;
+    stroke-dashoffset: var(--dash-size);
+  }
+
+  &__icon--dark {
+    stroke-dashoffset: 0;
+  }
+
+  &__button-scheme-color:hover &__icon {
+    @extend .icon--effect--glow;
+  }
+
+  &__button-scheme-color--dark &__icon--light {
+    stroke-dashoffset: 0;
+  }
+
+  &__button-scheme-color--dark &__icon--dark {
+    stroke-dashoffset: var(--dash-size);
+  }
+}

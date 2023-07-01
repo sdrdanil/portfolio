@@ -1,0 +1,47 @@
+.contacts {
+  &__title {
+    margin-bottom: 10px;
+    @extend %font-size-title-md;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    @include breakpoint-down(md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__item {
+    line-height: 1;
+
+    @for $i from 1 through 6 {
+      &--order-up-md--#{$i} {
+        @include breakpoint-up(md) {
+          order: $i;
+        }
+      }
+    }
+  }
+
+  &__link {
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: .3s;
+
+    &--tel {
+      @extend %font-size-text-sm;
+    }
+
+    &:hover {
+      font-weight: 700;
+
+      .icon {
+        stroke-width: 3px;
+      }
+    }
+  }
+}

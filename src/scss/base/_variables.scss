@@ -1,0 +1,82 @@
+%font-size-title-lg {
+  font-size: 48px;
+
+  @include breakpoint-down(sm) {
+    font-size: 36px;
+  }
+}
+
+%font-size-title-md {
+  font-size: 36px;
+
+  @include breakpoint-down(sm) {
+    font-size: 24px;
+  }
+}
+
+%font-size-text-md {
+  font-size: 20px;
+
+  @include breakpoint-down(sm) {
+    font-size: 14px;
+  }
+}
+
+%font-size-text-sm {
+  font-size: 18px;
+
+  @include breakpoint-down(sm) {
+    font-size: 12px;
+  }
+}
+
+$base-color-dark: lighten(black, 6%);
+$cells-color-dark: lighten(black, 18%);
+$section-color-dark: lighten(black, 23%);
+$base-color-light: darken(white, 6%);
+$cells-color-light: darken(white, 18%);
+$section-color-light: darken(white, 23%);
+
+:root {
+  --base-color-light: #{$base-color-light};
+  --base-color-dark: #{$base-color-dark};
+  --base-color: var(--base-color-light);
+  --gradient-light: #6e40aa, #6154c8, #4c6edb, #368ce1, #24aad8, #1ac7c2, #1ddea3, #30ee83, #52f667, #7ef658, #7ef658;
+  --gradient-dark: #0d0887, #41049d, #6a00a8, #8f0da4, #b12a90, #cb4679, #e16462, #f1834c, #fca636, #fcce25, #fcce25;
+  --gradient: var(--gradient-light);
+  --gradient-stop-transition: 300px;
+  --gradient-stop-space: 20px;
+  --gradient-animation-duration: 8s;
+  --gradient-background-size: 1800px;
+  --gradient-background-position-offset: 100px;
+
+  --cells-scale: 1.1;
+  --cells-min: 75px;
+  --cells-gap: 3px;
+  --cells-color-light: #{$cells-color-light};
+  --cells-color-dark: #{$cells-color-dark};
+  --cells-color: var(--cells-color-light);
+
+  --section-color-light: #{$section-color-light};
+  --section-color-dark: #{$section-color-dark};
+  --section-color: var(--section-color-light);
+
+  --text-color-light: #0F0F0F;
+  --text-color-dark: #F0F0F0;
+  --text-color: var(--text-color-light);
+
+  // --wrapper-height js
+  // --offset-top js
+
+  @include breakpoint-down(sm) {
+    --cells-min: 40px;
+  }
+}
+
+.dark {
+  --base-color: var(--base-color-dark);
+  --gradient: var(--gradient-dark);
+  --cells-color: var(--cells-color-dark);
+  --section-color: var(--section-color-dark);
+  --text-color: var(--text-color-dark);
+}

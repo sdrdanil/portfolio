@@ -1,0 +1,38 @@
+.icon {
+  aspect-ratio: 1 / 1;
+  stroke: var(--text-color);
+  stroke-dasharray: var(--dash-size);
+  fill: transparent;
+  transition: stroke-dashoffset .4s, filter .5s, stroke .5s, stroke-width .3s;
+
+  &--size--sm {
+    width: 28px;
+
+    @include breakpoint-down(sm) {
+      width: 20px;
+    }
+  }
+
+  &--size--md {
+    width: 40px;
+
+    @include breakpoint-down(sm) {
+      width: 30px;
+    }
+  }
+
+  &--effect--glow {
+    filter: drop-shadow(0px 0px 8px var(--stroke-color-active));
+    stroke: var(--stroke-color-active);
+  }
+
+  &--sun {
+    --stroke-color-active: yellow;
+    --dash-size: 250px;
+  }
+
+  &--moon {
+    --stroke-color-active: deepskyblue;
+    --dash-size: 150px;
+  }
+}

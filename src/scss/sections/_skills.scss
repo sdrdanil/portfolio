@@ -1,0 +1,18 @@
+.skills {
+  &__title {
+    margin-bottom: 10px;
+    @extend %font-size-title-md;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 2px;
+    }
+  }
+
+  &__span {
+    &::before {
+      content: ' - ';
+    }
+  }
+}
