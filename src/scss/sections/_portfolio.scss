@@ -39,12 +39,6 @@
   }
 
   &__item {
-    @for $i from 1 through 4 {
-      &:nth-child(#{$i}) {
-        --index: #{$i};
-      }
-    }
-
     flex: 1 1 auto;
     position: relative;
     border-top: 1px solid white;
@@ -56,9 +50,8 @@
     align-items: center;
     transform: translateX(100%);
     transition-property: transform, background-color;
-    transition-duration: .2s, .4s;
+    transition-duration: .15s, .4s;
     transition-timing-function: ease, ease;
-    transition-delay: calc(var(--index) * -.1s + .4s), 0s;
 
     @include breakpoint-down(sm) {
       border-left: 1px solid white;
@@ -86,9 +79,16 @@
     }
   }
 
-  &__box:hover &__item {
-    transform: translateX(0);
-    transition-delay: calc(var(--index) * .1s - .1s), 0s;
+  $step-duration: .05s;
+  @for $i from 1 through 4 {
+    &__item:nth-child(#{$i}) {
+      transition-delay: ((4 - $i) * $step-duration), 0s;
+    }
+
+    &__box:hover &__item:nth-child(#{$i}) {
+      transform: translateX(0);
+      transition-delay: (($i - 1) * $step-duration), 0s;
+    }
   }
 
   &__preview {
