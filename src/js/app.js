@@ -1,33 +1,42 @@
-import { isWebp } from './modules/service.js';
-
-isWebp();
-
-// Background cells
-const wrapper = document.querySelector('.wrapper');
-const cellsElem = document.querySelector('.cells');
-const cellsCollection = cellsElem.children;
-const root = getComputedStyle(document.body);
-const scale = +root.getPropertyValue('--cells-scale').trim();
-const minSize = +root.getPropertyValue('--cells-min').trim().slice(0, -2);
-
-function updateCells() {
-  const wrapperHeight = +(wrapper.offsetHeight * scale).toFixed(0);
-  wrapper.style.setProperty('--wrapper-height', `${wrapperHeight}px`);
-
-  const required = Math.ceil(
-    (wrapper.offsetHeight * wrapper.offsetWidth * scale) / minSize ** 2
-  );
-  if (required > cellsCollection.length) {
-    cellsElem.innerHTML = '<div class="cells__item"></div>'.repeat(required);
-  }
-
-  [].forEach.call(cellsCollection, (elem) => {
-    elem.style.setProperty('--offset-top', `-${elem.offsetTop}px`);
-  });
+function onlyWidth(handler) {
+  let formerWidth = window.innerWidth;
+  return (event) => {
+    if (window.innerWidth == formerWidth) return;
+    formerWidth = window.innerWidth;
+    return handler(event);
+  };
 }
 
-window.addEventListener('load', updateCells);
-window.addEventListener('resize', updateCells);
+const elemBackground = document.querySelector('.background');
+const elemCells = document.querySelector('.background__cells');
+
+function fillGrid() {
+  const wrapperWidth = document.querySelector('.wrapper').offsetWidth;
+  const wrapperHeight = document.querySelector('.wrapper').offsetHeight;
+  const cellSize = getComputedStyle(document.documentElement).getPropertyValue(
+    '--cell-size',
+  ).trim().slice(0, -2);
+  const columns = Math.ceil(wrapperWidth / cellSize);
+  const rows = Math.ceil(wrapperHeight / cellSize) + 1;
+  const requiredCells = columns * rows;
+  const additionalCells = requiredCells - elemCells.children.length;
+  const offset = (columns * cellSize - wrapperWidth) / 2;
+
+  if (additionalCells > 0) {
+    elemCells.append(
+      ...Array.from({ length: additionalCells }, () =>
+        document.createElement('div'),
+      ),
+    );
+  }
+  elemBackground.style.setProperty('--columns', columns);
+  elemBackground.style.setProperty('--rows', rows);
+  elemBackground.style.setProperty('left', `-${offset}px`);
+  elemBackground.style.setProperty('top', `-${offset}px`);
+}
+
+window.addEventListener('load', fillGrid);
+window.addEventListener('resize', onlyWidth(fillGrid));
 
 // Color scheme
 const buttonToggleScheme = document.querySelector('.hero__button-scheme-color');
@@ -43,7 +52,7 @@ function setDarkScheme() {
   document.body.classList.add('dark');
 }
 
-// 1. Проверка темной темы на уровне системных настроек
+// Check system color scheme
 if (
   window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -51,14 +60,14 @@ if (
   setDarkScheme();
 }
 
-// 2. Проверка темной темы в localStorage
+// Check localStorage color scheme
 if (localStorage.getItem('colorScheme') === 'dark') {
   setDarkScheme();
 } else if (localStorage.getItem('colorScheme') === 'light') {
   setLightScheme();
 }
 
-// Если меняются системные настройки, меняем тему
+// Watch change system color scheme
 window
   .matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', (event) => {
@@ -73,7 +82,9 @@ window
     }
   });
 
-// Включение ночного режима по кнопке
+// Button change color scheme
+
+
 buttonToggleScheme.onclick = function () {
   buttonToggleScheme.classList.toggle(modifierDarkScheme);
   const isDark = document.body.classList.toggle('dark');
@@ -83,4 +94,10 @@ buttonToggleScheme.onclick = function () {
   } else {
     localStorage.setItem('colorScheme', 'light');
   }
+
+  const backgroundCells = document.querySelector('.background__cells');
+  backgroundCells.classList.add('background__cells--changed-scheme');
+  backgroundCells.addEventListener('transitionend', () => {
+    backgroundCells.classList.remove('background__cells--changed-scheme');
+  }, { once: true });
 };

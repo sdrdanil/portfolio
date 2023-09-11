@@ -51,8 +51,8 @@ $section-color-light: darken(white, 23%);
   --gradient-background-position-offset: 100px;
 
   --cells-scale: 1.1;
-  --cells-min: 75px;
-  --cells-gap: 3px;
+  --cell-size: 85px;
+  --cell-mask-image: url('@img/rect-85.svg');
   --cells-color-light: #{$cells-color-light};
   --cells-color-dark: #{$cells-color-dark};
   --cells-color: var(--cells-color-light);
@@ -68,9 +68,7 @@ $section-color-light: darken(white, 23%);
   // --wrapper-height js
   // --offset-top js
 
-  @include breakpoint-down(sm) {
-    --cells-min: 40px;
-  }
+  --color-scheme-transition-delay: .1s;
 }
 
 .dark {
