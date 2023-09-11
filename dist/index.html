@@ -5,14 +5,36 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/style.min.css?_v=20230701121140" rel="stylesheet">
-  <script src="js/app.min.js?_v=20230701121140" defer></script>
+  <script>
+  function testWebP(callback) {
+    var webP = new Image();
+    webP.onload = webP.onerror = function () {
+      callback(webP.height == 2);
+    };
+    webP.src =
+      'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+  }
+
+  testWebP(function (support) {
+    if (support == true) {
+      document.querySelector('html').classList.add('webp');
+    } else {
+      document.querySelector('html').classList.add('no-webp');
+    }
+  });
+</script>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link href="css/style.min.css?_v=20230911223654" rel="stylesheet">
+  <script src="js/app.min.js?_v=20230911223654" defer></script>
   <title>Портфолио: Сидристый Данил</title>
 </head>
 
 <body>
   <div class="wrapper">
-    <div class="cells"></div>
+    <div class="background">
+      <div class="background__clearance"></div>
+      <div class="background__cells"></div>
+    </div>
 
     <main class="main">
       <section class="hero section">

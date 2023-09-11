@@ -1,0 +1,63 @@
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(var(--gradient));
+
+  &__clearance {
+    $offset: 200px;
+    $clearance: 50px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    height: 5000px;
+    background-image: linear-gradient(
+      var(--base-color), 
+      transparent $offset ($offset + $clearance),
+      var(--base-color) ($offset * 2 + $clearance)
+    );
+    background-size: 100% var(--gradient-background-size);
+
+  animation-name: motion;
+  animation-duration: var(--gradient-animation-duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+&__cells {
+  @extend %mask-svg;
+  --mask-svg-url: var(--cell-mask-image);
+  --mask-svg-repeat: repeat;
+  --mask-svg-size: auto;
+  --mask-svg-position: top left;
+
+  background-image: linear-gradient(var(--gradient));
+  display: grid;
+  grid-template-columns: repeat(var(--columns), var(--cell-size));
+  grid-auto-rows: var(--cell-size);
+
+  div {
+    background: var(--cells-color);
+    transition: background-color 2s linear;
+
+    &:hover {
+      background: transparent;
+      transition: 0s;
+    }
+  }
+
+  &--changed-scheme div {
+    transition: background-color var(--color-scheme-transition-delay);
+  }
+}
+}
+
+@keyframes motion {
+  0% {
+    transform: translateY(calc(-1 * var(--gradient-background-size)));
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
